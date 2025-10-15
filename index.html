@@ -1,0 +1,942 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Athletic Bilbao B - Sitio Oficial</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <style>
+    :root {
+      --primary-red: #dc3545;
+      --dark-bg: #1a1a1a;
+      --light-bg: #f8f9fa;
+    }
+    
+    body {
+      transition: background-color 0.3s ease, color 0.3s ease;
+    }
+    
+    body.dark-mode {
+      background-color: var(--dark-bg);
+      color: #e0e0e0;
+    }
+    
+    body.dark-mode .card {
+      background-color: #2d2d2d;
+      color: #e0e0e0;
+      border-color: #444;
+    }
+    
+    body.dark-mode .table {
+      color: #e0e0e0;
+    }
+    
+    body.dark-mode .table-striped tbody tr:nth-of-type(odd) {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+    
+    body.dark-mode .bg-light {
+      background-color: #2d2d2d !important;
+    }
+    
+    body.dark-mode footer {
+      background-color: #0d0d0d !important;
+    }
+
+    .section-content { 
+      display: none;
+      animation: fadeIn 0.5s ease-in;
+    }
+    
+    .section-content.active { 
+      display: block;
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .nav-btn.active { 
+      background-color: #dc3545 !important; 
+      color: white !important; 
+      border-color: #dc3545 !important;
+    }
+    
+    .nav-btn {
+      transition: all 0.3s ease;
+    }
+    
+    .nav-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(220, 53, 69, 0.3);
+    }
+    
+    .carousel-item img {
+      height: 400px;
+      object-fit: cover;
+    }
+    
+    .card {
+      transition: all 0.3s ease;
+      border: none;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+    }
+    
+    .card:hover {
+      transform: translateY(-10px);
+      box-shadow: 0 8px 25px rgba(220, 53, 69, 0.2);
+    }
+    
+    .hero-overlay {
+      background: linear-gradient(135deg, rgba(220, 53, 69, 0.8), rgba(108, 14, 224, 0.6));
+      backdrop-filter: blur(2px);
+    }
+    
+    .stat-card {
+      background: linear-gradient(135deg, var(--primary-red), #ff4757);
+      color: white;
+      border-radius: 15px;
+      padding: 20px;
+      text-align: center;
+      transition: all 0.3s ease;
+    }
+    
+    .stat-card:hover {
+      transform: scale(1.05);
+    }
+    
+    .stat-number {
+      font-size: 2.5rem;
+      font-weight: bold;
+    }
+    
+    .countdown-box {
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      color: white;
+      border-radius: 15px;
+      padding: 30px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    
+    .countdown-item {
+      display: inline-block;
+      margin: 0 15px;
+    }
+    
+    .countdown-number {
+      font-size: 3rem;
+      font-weight: bold;
+      display: block;
+    }
+    
+    .countdown-label {
+      font-size: 0.9rem;
+      text-transform: uppercase;
+    }
+    
+    .btn-action {
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .btn-action::before {
+      content: '';
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      width: 0;
+      height: 0;
+      border-radius: 50%;
+      background: rgba(255, 255, 255, 0.3);
+      transform: translate(-50%, -50%);
+      transition: width 0.6s, height 0.6s;
+    }
+    
+    .btn-action:active::before {
+      width: 300px;
+      height: 300px;
+    }
+    
+    .player-filter {
+      margin-bottom: 20px;
+    }
+    
+    .legend-card {
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .legend-card img {
+      transition: transform 0.5s ease;
+    }
+    
+    .legend-card:hover img {
+      transform: scale(1.1);
+    }
+    
+    .social-feed {
+      max-height: 400px;
+      overflow-y: auto;
+    }
+    
+    .social-post {
+      border-left: 4px solid var(--primary-red);
+      padding: 15px;
+      margin-bottom: 15px;
+      background: white;
+      border-radius: 5px;
+      transition: all 0.3s ease;
+    }
+    
+    body.dark-mode .social-post {
+      background: #2d2d2d;
+    }
+    
+    .social-post:hover {
+      transform: translateX(10px);
+      box-shadow: 0 4px 12px rgba(220, 53, 69, 0.2);
+    }
+    
+    .dark-mode-toggle {
+      position: fixed;
+      bottom: 30px;
+      right: 30px;
+      z-index: 1000;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: var(--primary-red);
+      color: white;
+      border: none;
+      box-shadow: 0 4px 15px rgba(220, 53, 69, 0.4);
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+    
+    .dark-mode-toggle:hover {
+      transform: rotate(180deg) scale(1.1);
+    }
+    
+    .badge-live {
+      animation: pulse 2s infinite;
+    }
+    
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+    
+    .gallery-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+      gap: 15px;
+    }
+    
+    .gallery-item {
+      position: relative;
+      overflow: hidden;
+      border-radius: 10px;
+      height: 200px;
+      background: linear-gradient(135deg, #667eea, #764ba2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-size: 1.2rem;
+      transition: all 0.3s ease;
+    }
+    
+    .gallery-item:hover {
+      transform: scale(1.05);
+    }
+    
+    .faq-item {
+      border-bottom: 1px solid #dee2e6;
+      padding: 15px 0;
+    }
+    
+    .faq-question {
+      cursor: pointer;
+      font-weight: bold;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    
+    .faq-answer {
+      display: none;
+      padding-top: 10px;
+      color: #666;
+    }
+    
+    .faq-answer.show {
+      display: block;
+      animation: fadeIn 0.3s ease;
+    }
+    
+    body.dark-mode .faq-item {
+      border-bottom-color: #444;
+    }
+    
+    body.dark-mode .faq-answer {
+      color: #aaa;
+    }
+
+    .form-message {
+      display: none;
+      padding: 15px;
+      border-radius: 5px;
+      margin-top: 15px;
+      animation: fadeIn 0.5s ease;
+    }
+    
+    .form-message.success {
+      background-color: #d4edda;
+      color: #155724;
+      border: 1px solid #c3e6cb;
+    }
+    
+    .form-message.error {
+      background-color: #f8d7da;
+      color: #721c24;
+      border: 1px solid #f5c6cb;
+    }
+  </style>
+</head>
+<body>
+  <nav class="navbar navbar-expand-lg navbar-dark bg-danger sticky-top">
+    <div class="container-fluid">
+      <a class="navbar-brand d-flex align-items-center" href="#" onclick="showSection('inicio')">
+        <i class="bi bi-trophy-fill fs-3 me-2"></i>
+        <span class="fw-bold">Athletic Bilbao B</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navLinks">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navLinks">
+        <div class="btn-group ms-auto" role="group">
+          <button data-section="inicio" class="btn btn-outline-light nav-btn active">
+            <i class="bi bi-house-fill"></i> Inicio
+          </button>
+          <button data-section="historia" class="btn btn-outline-light nav-btn">
+            <i class="bi bi-clock-history"></i> Historia
+          </button>
+          <button data-section="jugadores" class="btn btn-outline-light nav-btn">
+            <i class="bi bi-people-fill"></i> Jugadores
+          </button>
+          <button data-section="calendario" class="btn btn-outline-light nav-btn">
+            <i class="bi bi-calendar-event"></i> Calendario
+          </button>
+          <button data-section="noticias" class="btn btn-outline-light nav-btn">
+            <i class="bi bi-newspaper"></i> Noticias
+          </button>
+          <button data-section="leyendas" class="btn btn-outline-light nav-btn">
+            <i class="bi bi-star-fill"></i> Leyendas
+          </button>
+          <button data-section="galeria" class="btn btn-outline-light nav-btn">
+            <i class="bi bi-images"></i> Galería
+          </button>
+          <button data-section="faq" class="btn btn-outline-light nav-btn">
+            <i class="bi bi-question-circle"></i> FAQ
+          </button>
+          <button data-section="contacto" class="btn btn-outline-light nav-btn">
+            <i class="bi bi-envelope-fill"></i> Contacto
+          </button>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container my-5">
+    <!-- INICIO -->
+    <section id="inicio" class="section-content active">
+      <div class="position-relative rounded overflow-hidden mb-5">
+        <div id="carouselLezama" class="carousel slide" data-bs-ride="carousel">
+          <div class="carousel-inner">
+            <div class="carousel-item active">
+              <div style="height: 400px; background: linear-gradient(135deg, #667eea, #764ba2);"></div>
+            </div>
+            <div class="carousel-item">
+              <div style="height: 400px; background: linear-gradient(135deg, #f093fb, #f5576c);"></div>
+            </div>
+            <div class="carousel-item">
+              <div style="height: 400px; background: linear-gradient(135deg, #4facfe, #00f2fe);"></div>
+            </div>
+          </div>
+          <button class="carousel-control-prev" type="button" data-bs-target="#carouselLezama" data-bs-slide="prev">
+            <span class="carousel-control-prev-icon"></span>
+          </button>
+          <button class="carousel-control-next" type="button" data-bs-target="#carouselLezama" data-bs-slide="next">
+            <span class="carousel-control-next-icon"></span>
+          </button>
+        </div>
+        <div class="position-absolute top-0 start-0 w-100 h-100 d-flex flex-column justify-content-center align-items-center hero-overlay text-white text-center p-4">
+          <h2 class="display-4 fw-bold">Athletic Bilbao B</h2>
+          <p class="lead">La cantera del futuro, forjando leones en Lezama</p>
+        </div>
+      </div>
+
+      <div class="countdown-box">
+        <h4 class="mb-3"><i class="bi bi-clock-fill"></i> Próximo Partido</h4>
+        <div class="mb-3">
+          <strong>Athletic Bilbao B vs UD Logroñés</strong><br>
+          <small>Primera RFEF - Jornada 5</small>
+        </div>
+        <div id="countdown">
+          <div class="countdown-item">
+            <span class="countdown-number" id="days">0</span>
+            <span class="countdown-label">Días</span>
+          </div>
+          <div class="countdown-item">
+            <span class="countdown-number" id="hours">0</span>
+            <span class="countdown-label">Horas</span>
+          </div>
+          <div class="countdown-item">
+            <span class="countdown-number" id="minutes">0</span>
+            <span class="countdown-label">Minutos</span>
+          </div>
+          <div class="countdown-item">
+            <span class="countdown-number" id="seconds">0</span>
+            <span class="countdown-label">Segundos</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4 mb-5">
+        <div class="col-md-3">
+          <div class="stat-card">
+            <i class="bi bi-trophy-fill fs-1 mb-2"></i>
+            <div class="stat-number">3</div>
+            <div>Victorias</div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stat-card">
+          <i class="bi bi-dash-circle-fill fs-1 mb-2"></i>
+            <div class="stat-number">1</div>
+            <div>Empates</div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stat-card">
+            <i class="bi bi-x-circle-fill fs-1 mb-2"></i>
+            <div class="stat-number">0</div>
+            <div>Derrotas</div>
+          </div>
+        </div>
+        <div class="col-md-3">
+          <div class="stat-card">
+            <i class="bi bi-bar-chart-fill fs-1 mb-2"></i>
+            <div class="stat-number">2°</div>
+            <div>Posición</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title text-danger"><i class="bi bi-heart-fill"></i> Nuestra Filosofía</h5>
+              <p class="card-text">
+                El Athletic Bilbao B mantiene la política de cantera del club, jugando solo con futbolistas vascos o formados en Euskadi.
+              </p>
+              <button class="btn btn-danger btn-action" onclick="showSection('historia')">Leer más</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title text-danger"><i class="bi bi-geo-alt-fill"></i> El Campo</h5>
+              <p class="card-text">
+                La Ciudad Deportiva de Lezama es nuestro hogar desde 1971, con instalaciones modernas para el desarrollo de jóvenes talentos.
+              </p>
+              <button class="btn btn-danger btn-action" onclick="showSection('historia')">Leer más</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card h-100 shadow-sm">
+            <div class="card-body">
+              <h5 class="card-title text-danger"><i class="bi bi-award-fill"></i> Palmarés</h5>
+              <p class="card-text">
+                3 títulos de Segunda División B, múltiples ascensos y el orgullo de suministrar jugadores al primer equipo desde 1962.
+              </p>
+              <button class="btn btn-danger btn-action" onclick="showSection('historia')">Leer más</button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="mt-5">
+        <h3 class="text-danger mb-4"><i class="bi bi-chat-dots-fill"></i> Redes Sociales</h3>
+        <div class="social-feed">
+          <div class="social-post">
+            <div class="d-flex justify-content-between mb-2">
+              <strong><i class="bi bi-twitter text-primary"></i> @AthleticClub</strong>
+              <small class="text-muted">Hace 2 horas</small>
+            </div>
+            <p>¡Gran victoria del Bilbao B en Lezama! Los jóvenes leones siguen demostrando su calidad 🦁⚪🔴</p>
+            <small class="text-muted"><i class="bi bi-heart-fill text-danger"></i> 234 <i class="bi bi-chat-fill ms-2"></i> 45</small>
+          </div>
+          <div class="social-post">
+            <div class="d-flex justify-content-between mb-2">
+              <strong><i class="bi bi-instagram text-danger"></i> @athleticclub</strong>
+              <small class="text-muted">Hace 5 horas</small>
+            </div>
+            <p>Entrenamiento intenso en Lezama. Preparando el próximo desafío 💪⚽</p>
+            <small class="text-muted"><i class="bi bi-heart-fill text-danger"></i> 567 <i class="bi bi-chat-fill ms-2"></i> 78</small>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- HISTORIA -->
+    <section id="historia" class="section-content">
+      <h2 class="text-danger mb-4"><i class="bi bi-clock-history"></i> Historia del Athletic Bilbao B</h2>
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="card-title text-danger">Orígenes</h5>
+              <p>El Athletic Bilbao B fue fundado en 1962 como el equipo filial del Athletic Club. Desde entonces, ha sido la cantera principal del club, desarrollando jóvenes talentos vascos que posteriormente han jugado en el primer equipo.</p>
+            </div>
+          </div>
+          <div class="card mb-4">
+            <div class="card-body">
+              <h5 class="card-title text-danger">Lezama</h5>
+              <p>La Ciudad Deportiva de Lezama, inaugurada en 1971, es la sede oficial del Athletic Bilbao B. Esta instalación de clase mundial alberga campos de entrenamiento, vestuarios modernos y todas las facilidades necesarias para formar a los futuros leones del Athletic.</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title text-danger">Filosofía</h5>
+              <p>El Athletic Bilbao B mantiene fielmente la política de cantera del club: solo pueden jugar futbolistas nacidos en Euskadi o formados en la región. Esta política ha fortalecido la identidad del club y ha producido generaciones de jugadores de calidad.</p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card bg-light">
+            <div class="card-body">
+              <h5 class="card-title text-danger">Datos Históricos</h5>
+              <ul class="list-unstyled">
+                <li><strong>Fundación:</strong> 1962</li>
+                <li><strong>Estadio Base:</strong> Lezama (desde 1971)</li>
+                <li><strong>Títulos:</strong> 3 Segunda División B</li>
+                <li><strong>Colorores:</strong> Rojo y Blanco</li>
+                <li><strong>Política:</strong> Solo vascos</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- JUGADORES -->
+    <section id="jugadores" class="section-content">
+      <h2 class="text-danger mb-4"><i class="bi bi-people-fill"></i> Plantilla</h2>
+      <div class="player-filter mb-4">
+        <button class="btn btn-outline-danger me-2" onclick="filterPlayers('all')">Todos</button>
+        <button class="btn btn-outline-danger me-2" onclick="filterPlayers('portero')">Porteros</button>
+        <button class="btn btn-outline-danger me-2" onclick="filterPlayers('defensa')">Defensas</button>
+        <button class="btn btn-outline-danger me-2" onclick="filterPlayers('centrocampista')">Centrocampistas</button>
+        <button class="btn btn-outline-danger" onclick="filterPlayers('delantero')">Delanteros</button>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-hover" id="playerTable">
+          <thead class="table-danger">
+            <tr>
+              <th>#</th>
+              <th>Nombre</th>
+              <th>Posición</th>
+              <th>Edad</th>
+              <th>Goles</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr data-position="portero">
+              <td>1</td>
+              <td>Jon Gurrutxaga</td>
+              <td>Portero</td>
+              <td>22</td>
+              <td>-</td>
+            </tr>
+            <tr data-position="defensa">
+              <td>4</td>
+              <td>Unai Núñez</td>
+              <td>Defensa</td>
+              <td>21</td>
+              <td>1</td>
+            </tr>
+            <tr data-position="defensa">
+              <td>5</td>
+              <td>Asier Illarramendi</td>
+              <td>Defensa</td>
+              <td>20</td>
+              <td>0</td>
+            </tr>
+            <tr data-position="centrocampista">
+              <td>7</td>
+              <td>Oihan Sancet</td>
+              <td>Centrocampista</td>
+              <td>23</td>
+              <td>2</td>
+            </tr>
+            <tr data-position="centrocampista">
+              <td>8</td>
+              <td>Mikel Vesga</td>
+              <td>Centrocampista</td>
+              <td>21</td>
+              <td>1</td>
+            </tr>
+            <tr data-position="delantero">
+              <td>9</td>
+              <td>Gorka Guruzeta</td>
+              <td>Delantero</td>
+              <td>22</td>
+              <td>3</td>
+            </tr>
+            <tr data-position="delantero">
+              <td>10</td>
+              <td>Nico Williams</td>
+              <td>Delantero</td>
+              <td>19</td>
+              <td>2</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </section>
+
+    <!-- CALENDARIO -->
+    <section id="calendario" class="section-content">
+      <h2 class="text-danger mb-4"><i class="bi bi-calendar-event"></i> Calendario 2024-2025</h2>
+      <div class="row">
+        <div class="col-lg-8">
+          <div class="list-group">
+            <div class="list-group-item">
+              <div class="d-flex justify-content-between">
+                <h6>Athletic Bilbao B vs UD Logroñés</h6>
+                <span class="badge bg-danger rounded-pill">Próximo</span>
+              </div>
+              <p class="mb-1"><small><i class="bi bi-calendar-fill"></i> 22 de Octubre 2024</small></p>
+              <p class="mb-0"><small><i class="bi bi-geo-alt-fill"></i> Lezama</small></p>
+            </div>
+            <div class="list-group-item">
+              <h6>SD Ponferradina vs Athletic Bilbao B</h6>
+              <p class="mb-1"><small><i class="bi bi-calendar-fill"></i> 26 de Octubre 2024</small></p>
+              <p class="mb-0"><small><i class="bi bi-geo-alt-fill"></i> Fuera de casa</small></p>
+            </div>
+            <div class="list-group-item">
+              <h6>Athletic Bilbao B vs UD Ibiza</h6>
+              <p class="mb-1"><small><i class="bi bi-calendar-fill"></i> 2 de Noviembre 2024</small></p>
+              <p class="mb-0"><small><i class="bi bi-geo-alt-fill"></i> Lezama</small></p>
+            </div>
+            <div class="list-group-item">
+              <h6>CP Villarrobledo vs Athletic Bilbao B</h6>
+              <p class="mb-1"><small><i class="bi bi-calendar-fill"></i> 9 de Noviembre 2024</small></p>
+              <p class="mb-0"><small><i class="bi bi-geo-alt-fill"></i> Fuera de casa</small></p>
+            </div>
+          </div>
+        </div>
+        <div class="col-lg-4">
+          <div class="card bg-light">
+            <div class="card-body">
+              <h5 class="card-title text-danger">Estadísticas</h5>
+              <p><strong>Partidos:</strong> 4</p>
+              <p><strong>Victorias:</strong> 3</p>
+              <p><strong>Empates:</strong> 1</p>
+              <p><strong>Derrotas:</strong> 0</p>
+              <p><strong>Goles a favor:</strong> 8</p>
+              <p><strong>Goles en contra:</strong> 2</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- NOTICIAS -->
+    <section id="noticias" class="section-content">
+      <h2 class="text-danger mb-4"><i class="bi bi-newspaper"></i> Últimas Noticias</h2>
+      <div class="row g-4">
+        <div class="col-md-6">
+          <div class="card h-100">
+            <div style="height: 200px; background: linear-gradient(135deg, #667eea, #764ba2);"></div>
+            <div class="card-body">
+              <h5 class="card-title text-danger">Gran Victoria en Lezama</h5>
+              <p class="card-text">El Athletic Bilbao B consigue una importante victoria frente a un rival directo. Los jóvenes leones mostraron gran nivel defensivo y contragolpe.</p>
+              <small class="text-muted">Hace 2 días</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card h-100">
+            <div style="height: 200px; background: linear-gradient(135deg, #f093fb, #f5576c);"></div>
+            <div class="card-body">
+              <h5 class="card-title text-danger">Nico Williams en la selección</h5>
+              <p class="card-text">Nuestro joven talento ha sido convocado para entrenamientos de la selección sub-21. Un paso importante en su desarrollo futbolístico.</p>
+              <small class="text-muted">Hace 5 días</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card h-100">
+            <div style="height: 200px; background: linear-gradient(135deg, #4facfe, #00f2fe);"></div>
+            <div class="card-body">
+              <h5 class="card-title text-danger">Nuevo técnico en Lezama</h5>
+              <p class="card-text">Se presenta oficialmente el nuevo entrenador que dirigirá la cantera en esta temporada 2024-2025.</p>
+              <small class="text-muted">Hace 1 semana</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- LEYENDAS -->
+    <section id="leyendas" class="section-content">
+      <h2 class="text-danger mb-4"><i class="bi bi-star-fill"></i> Leyendas de la Cantera</h2>
+      <div class="row g-4">
+        <div class="col-md-4">
+          <div class="card legend-card">
+            <div style="height: 250px; background: linear-gradient(135deg, #667eea, #764ba2);"></div>
+            <div class="card-body">
+              <h5 class="card-title text-danger">Javi Martínez</h5>
+              <p class="card-text">Formado en Lezama, se convirtió en uno de los mejores centrocampistas del Athletic y la selección española.</p>
+              <small class="text-muted">Década 2000-2010</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card legend-card">
+            <div style="height: 250px; background: linear-gradient(135deg, #f093fb, #f5576c);"></div>
+            <div class="card-body">
+              <h5 class="card-title text-danger">Iker Muniain</h5>
+              <p class="card-text">Cantera pura del Athletic. Ha sido capitán del equipo y referente de la filosofía vasca del club.</p>
+              <small class="text-muted">Desde 2009</small>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-4">
+          <div class="card legend-card">
+            <div style="height: 250px; background: linear-gradient(135deg, #4facfe, #00f2fe);"></div>
+            <div class="card-body">
+              <h5 class="card-title text-danger">Raúl García</h5>
+              <p class="card-text">Volvió a Lezama tras su experiencia en el extranjero, demostrando que el Athletic es su hogar.</p>
+              <small class="text-muted">2008-2019</small>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- GALERÍA -->
+    <section id="galeria" class="section-content">
+      <h2 class="text-danger mb-4"><i class="bi bi-images"></i> Galería</h2>
+      <div class="gallery-grid">
+        <div class="gallery-item">Lezama Vista Aérea</div>
+        <div class="gallery-item">Entrenamiento</div>
+        <div class="gallery-item">Partido en Casa</div>
+        <div class="gallery-item">Celebración</div>
+        <div class="gallery-item">Cancha Principal</div>
+        <div class="gallery-item">Vestuarios</div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq" class="section-content">
+      <h2 class="text-danger mb-4"><i class="bi bi-question-circle"></i> Preguntas Frecuentes</h2>
+      <div class="card">
+        <div class="card-body">
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              <span>¿Cuál es la política de cantera del Athletic Bilbao B?</span>
+              <i class="bi bi-chevron-down"></i>
+            </div>
+            <div class="faq-answer">Solo pueden jugar futbolistas nacidos en Euskadi o formados en la región. Esta es la filosofía fundamental del Athletic Club.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              <span>¿Dónde entrena el Athletic Bilbao B?</span>
+              <i class="bi bi-chevron-down"></i>
+            </div>
+            <div class="faq-answer">En la Ciudad Deportiva de Lezama, inaugurada en 1971. Es una instalación de clase mundial con todas las facilidades necesarias.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              <span>¿Cuándo fue fundado el Athletic Bilbao B?</span>
+              <i class="bi bi-chevron-down"></i>
+            </div>
+            <div class="faq-answer">El Athletic Bilbao B fue fundado en 1962 como el equipo filial del Athletic Club para desarrollar jóvenes talentos vascos.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              <span>¿En qué competición juega el Athletic Bilbao B?</span>
+              <i class="bi bi-chevron-down"></i>
+            </div>
+            <div class="faq-answer">Actualmente compite en la Primera RFEF, la segunda categoría del fútbol español, en la que busca consolidarse y ascender.</div>
+          </div>
+          <div class="faq-item">
+            <div class="faq-question" onclick="toggleFAQ(this)">
+              <span>¿Cómo puedo ver los partidos?</span>
+              <i class="bi bi-chevron-down"></i>
+            </div>
+            <div class="faq-answer">Los partidos se juegan en Lezama. Puedes asistir como espectador o seguirlos a través de nuestras redes sociales oficiales.</div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- CONTACTO -->
+    <section id="contacto" class="section-content">
+      <h2 class="text-danger mb-4"><i class="bi bi-envelope-fill"></i> Contacto</h2>
+      <div class="row">
+        <div class="col-lg-6">
+          <form id="contactForm">
+            <div class="mb-3">
+              <label for="nombre" class="form-label">Nombre</label>
+              <input type="text" class="form-control" id="nombre" required>
+            </div>
+            <div class="mb-3">
+              <label for="email" class="form-label">Email</label>
+              <input type="email" class="form-control" id="email" required>
+            </div>
+            <div class="mb-3">
+              <label for="asunto" class="form-label">Asunto</label>
+              <input type="text" class="form-control" id="asunto" required>
+            </div>
+            <div class="mb-3">
+              <label for="mensaje" class="form-label">Mensaje</label>
+              <textarea class="form-control" id="mensaje" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn btn-danger btn-action">Enviar Mensaje</button>
+            <div id="formMessage" class="form-message"></div>
+          </form>
+        </div>
+        <div class="col-lg-6">
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title text-danger"><i class="bi bi-geo-alt-fill"></i> Ubicación</h5>
+              <p>Ciudad Deportiva de Lezama<br>Barrio de Lezama<br>Bilbao, Vizcaya<br>Euskadi, España</p>
+            </div>
+          </div>
+          <div class="card mb-3">
+            <div class="card-body">
+              <h5 class="card-title text-danger"><i class="bi bi-telephone-fill"></i> Teléfono</h5>
+              <p>+34 94 400 0000</p>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-body">
+              <h5 class="card-title text-danger"><i class="bi bi-envelope-fill"></i> Email</h5>
+              <p>info@athleticbilbao.eus</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="bg-light py-4 mt-5 border-top">
+    <div class="container text-center">
+      <p class="mb-0">&copy; 2024 Athletic Bilbao B. Todos los derechos reservados. | Diseñado con ❤️ en Lezama</p>
+      <div class="mt-3">
+        <a href="#" class="me-3 text-danger"><i class="bi bi-twitter fs-5"></i></a>
+        <a href="#" class="me-3 text-danger"><i class="bi bi-instagram fs-5"></i></a>
+        <a href="#" class="me-3 text-danger"><i class="bi bi-facebook fs-5"></i></a>
+        <a href="#" class="text-danger"><i class="bi bi-youtube fs-5"></i></a>
+      </div>
+    </div>
+  </footer>
+
+  <button class="dark-mode-toggle" onclick="toggleDarkMode()" title="Alternar modo oscuro">
+    <i class="bi bi-moon-stars-fill"></i>
+  </button>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script>
+    function showSection(sectionId) {
+      const sections = document.querySelectorAll('.section-content');
+      const buttons = document.querySelectorAll('.nav-btn');
+      
+      sections.forEach(s => s.classList.remove('active'));
+      buttons.forEach(b => b.classList.remove('active'));
+      
+      document.getElementById(sectionId).classList.add('active');
+      document.querySelector(`[data-section="${sectionId}"]`).classList.add('active');
+      
+      window.scrollTo(0, 0);
+    }
+
+    function filterPlayers(position) {
+      const rows = document.querySelectorAll('#playerTable tbody tr');
+      rows.forEach(row => {
+        if (position === 'all' || row.dataset.position === position) {
+          row.style.display = '';
+        } else {
+          row.style.display = 'none';
+        }
+      });
+    }
+
+    function toggleFAQ(element) {
+      const answer = element.nextElementSibling;
+      answer.classList.toggle('show');
+      const icon = element.querySelector('i');
+      icon.style.transform = answer.classList.contains('show') ? 'rotate(180deg)' : 'rotate(0)';
+    }
+
+    function toggleDarkMode() {
+      document.body.classList.toggle('dark-mode');
+      localStorage.setItem('darkMode', document.body.classList.contains('dark-mode'));
+    }
+
+    function updateCountdown() {
+      const targetDate = new Date('2024-10-22T20:00:00').getTime();
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+      const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+      const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+      const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+      document.getElementById('days').textContent = days;
+      document.getElementById('hours').textContent = hours;
+      document.getElementById('minutes').textContent = minutes;
+      document.getElementById('seconds').textContent = seconds;
+    }
+
+    document.getElementById('contactForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      const messageDiv = document.getElementById('formMessage');
+      messageDiv.textContent = '¡Mensaje enviado correctamente! Nos pondremos en contacto pronto.';
+      messageDiv.classList.add('success');
+      messageDiv.style.display = 'block';
+      this.reset();
+      setTimeout(() => {
+        messageDiv.style.display = 'none';
+      }, 5000);
+    });
+
+    document.querySelectorAll('.nav-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        showSection(this.dataset.section);
+      });
+    });
+
+    // Restaurar modo oscuro
+    if (localStorage.getItem('darkMode') === 'true') {
+      document.body.classList.add('dark-mode');
+    }
+
+    // Actualizar countdown cada segundo
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+  </script>
+</body>
+</html>
